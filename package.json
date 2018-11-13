@@ -12,6 +12,8 @@
   "homepage": "https://github.com/geo-org-ios/git-revision-with-grunt#readme",
   "devDependencies": {
     "grunt": "^1.0.3",
-    "grunt-gitinfo": "^0.1.8"
+    "grunt-git": "^1.0.10",
+    "grunt-gitinfo": "^0.1.8",
+    "grunt-rename": "^0.1.4"
   }
 }
