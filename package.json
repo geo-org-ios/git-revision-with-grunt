@@ -1,0 +1,17 @@
+{
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geo-org-ios/git-revision-with-grunt.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geo-org-ios/git-revision-with-grunt/issues"
+  },
+  "homepage": "https://github.com/geo-org-ios/git-revision-with-grunt#readme",
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "grunt-gitinfo": "^0.1.8"
+  }
+}
