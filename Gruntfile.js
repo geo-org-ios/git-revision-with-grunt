@@ -23,13 +23,12 @@ module.exports = function(grunt) {
     gitclone: {
       clone: {
         options: {
-          repository:
-            "https://github.com/geo-org-ios/git-revision-with-grunt.git",
+          repository: ".",
           branch: "<%= gitinfo.local.branch.current.name %>",
           directory: "deploy/"
         }
       },
-      master: {
+      masterOrigin: {
         options: {
           repository:
             "https://github.com/geo-org-ios/git-revision-with-grunt.git",
@@ -38,6 +37,12 @@ module.exports = function(grunt) {
         }
       }
     }
+  });
+
+  grunt.task.registerTask("getGitInfo", "get config", function() {
+    let gitinfo = grunt.config.data.gitinfo;
+    console.log(gitinfo.local);
+    console.log(gitinfo.remote);
   });
 
   grunt.loadNpmTasks("grunt-gitinfo");
@@ -50,5 +55,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask("deploy", ["gitinfo", "gitclone:clone", "rename:moveApp"]);
 
-  grunt.registerTask("gitclonemaster", ["gitinfo", "gitclone:master"]);
+  grunt.registerTask("gitclonemaster", ["gitinfo", "gitclone:masterOrigin"]);
 };
