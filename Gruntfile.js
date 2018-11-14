@@ -60,7 +60,7 @@ module.exports = function(grunt) {
           repository:
             "https://github.com/geo-org-ios/git-revision-with-grunt.git",
           branch: "master",
-          directory: "deploy",
+          directory: "deploy/",
           recursive: true,
         }
       }
@@ -81,11 +81,9 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks("grunt-git");
 
-  grunt.registerTask("domagic", ["gitinfo", "rename:moveApp"]);
-
   grunt.registerTask("deploy", ["gitinfo", "gitclone:clone", "rename:moveApp"]);
 
   grunt.registerTask("deployTag", ["gitinfo", "gitclone:tag", "rename:moveAppTag"]);
 
-  grunt.registerTask("gitclonemaster", ["gitinfo", "gitclone:masterOrigin"]);
+  grunt.registerTask("deployOrigin", ["gitinfo", "gitclone:masterOrigin", "rename:moveApp"]);
 };
