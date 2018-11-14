@@ -3,6 +3,9 @@ module.exports = function(grunt) {
     gitinfo: {
       options: {
         cwd: "."
+      },
+      commands: {
+        tagname : ['describe', '--tags']
       }
     },
     rename: {
@@ -18,14 +21,38 @@ module.exports = function(grunt) {
           "_" +
           `${Math.floor(Date.now() / 1000)}` +
           "/"
+      },
+      moveAppTag: {
+        src: "deploy/",
+        dest:
+          "copy/" +
+          "<%= gitinfo.tagname %>" +
+          "_" +
+          "<%= gitinfo.local.branch.current.shortSHA %>" +
+          "_" +
+          "<%= gitinfo.local.branch.current.lastCommitNumber %>" +
+          "_" +
+          `${Math.floor(Date.now() / 1000)}` +
+          "/"
       }
     },
+
     gitclone: {
       clone: {
         options: {
           repository: ".",
           branch: "<%= gitinfo.local.branch.current.name %>",
-          directory: "deploy/"
+          directory: "deploy/",
+          recursive: true,
+        }
+      },
+      // tag must be on master right now
+      tag: {
+        options: {
+          repository: ".",
+          branch: "master",
+          directory: "deploy/",
+          recursive: true,
         }
       },
       masterOrigin: {
@@ -33,7 +60,8 @@ module.exports = function(grunt) {
           repository:
             "https://github.com/geo-org-ios/git-revision-with-grunt.git",
           branch: "master",
-          directory: "deploy"
+          directory: "deploy",
+          recursive: true,
         }
       }
     }
@@ -43,6 +71,8 @@ module.exports = function(grunt) {
     let gitinfo = grunt.config.data.gitinfo;
     console.log(gitinfo.local);
     console.log(gitinfo.remote);
+    console.log(gitinfo.options);
+    console.log(gitinfo.tagname);
   });
 
   grunt.loadNpmTasks("grunt-gitinfo");
@@ -54,6 +84,8 @@ module.exports = function(grunt) {
   grunt.registerTask("domagic", ["gitinfo", "rename:moveApp"]);
 
   grunt.registerTask("deploy", ["gitinfo", "gitclone:clone", "rename:moveApp"]);
+
+  grunt.registerTask("deployTag", ["gitinfo", "gitclone:tag", "rename:moveAppTag"]);
 
   grunt.registerTask("gitclonemaster", ["gitinfo", "gitclone:masterOrigin"]);
 };
