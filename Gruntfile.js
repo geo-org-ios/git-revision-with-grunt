@@ -55,11 +55,11 @@ module.exports = function(grunt) {
           recursive: true,
         }
       },
-      masterOrigin: {
+      origin: {
         options: {
           repository:
             "https://github.com/geo-org-ios/git-revision-with-grunt.git",
-          branch: "master",
+          branch: "<%= gitinfo.local.branch.current.name %>",
           directory: "deploy/",
           recursive: true,
         }
@@ -85,5 +85,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask("deployTag", ["gitinfo", "gitclone:tag", "rename:moveAppTag"]);
 
-  grunt.registerTask("deployOrigin", ["gitinfo", "gitclone:masterOrigin", "rename:moveApp"]);
+  grunt.registerTask("deployOrigin", ["gitinfo", "gitclone:origin", "rename:moveApp"]);
 };
