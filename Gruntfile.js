@@ -12,6 +12,15 @@ module.exports = function(grunt) {
       moveApp: {
         src: "deploy/",
         dest:
+          "copy/" + "app." + 
+          "<%= gitinfo.local.branch.current.shortSHA %>" +
+          "_" +
+          `${Math.floor(Date.now() / 1000)}` +
+          "/"
+      },
+      moveAppLong: {
+        src: "deploy/",
+        dest:
           "copy/" +
           "<%= gitinfo.local.branch.current.name %>" +
           "_" +
@@ -81,6 +90,8 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks("grunt-git");
 
+  grunt.registerTask("git-info", ["gitinfo", "getGitInfo"]);
+  
   grunt.registerTask("deploy", ["gitinfo", "gitclone:clone", "rename:moveApp"]);
 
   grunt.registerTask("deployTag", ["gitinfo", "gitclone:tag", "rename:moveAppTag"]);
